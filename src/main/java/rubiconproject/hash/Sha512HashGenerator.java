@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -29,5 +30,9 @@ public class Sha512HashGenerator implements HashGenerator {
             LOG.error("Encoding error: {}", e.getMessage());
         }
         return hashedString;
+    }
+
+    public String toHex(String hash) {
+        return String.format("%040x", new BigInteger(1, hash.getBytes()));
     }
 }
