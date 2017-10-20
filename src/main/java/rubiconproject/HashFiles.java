@@ -2,20 +2,15 @@ package rubiconproject;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.util.FileUtils;
 import rubiconproject.hash.HashGenerator;
 import rubiconproject.hash.Sha512HashGenerator;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Copyright © 2016 Rubicon Project, All rights reserved.
@@ -34,28 +29,41 @@ public class HashFiles {
         // Implement a program to calculate hash of the specified directory or file
         String path = argv[0];
         LOG.info("Receive path {}", path);
-//        Files.walk(Paths.get(path))
-//                .forEach(System.out::println);
-        List<FileHash> list = new LinkedList<>();
-        List<FileHash> fileHashes = recursionHash(Paths.get(path).toFile(), list);
-        fileHashes.forEach(System.out::println);
+        FileHash fileHashes = recursionHash(Paths.get(path).toFile());
+        System.out.println(fileHashes);
     }
 
-    static List<FileHash> recursionHash(File file, List<FileHash> fileHashList)  {
+    static FileHash recursionHash(File file)  {
         try {
             if (file.isDirectory()) {
-                fileHashList.add(FileHash.builder().setFileName(file.getName()).build());
                 File[] files = file.listFiles();
+                List<FileHash> internalList = new LinkedList<>();
                 for (File f : files) {
-                    recursionHash(f, fileHashList);
+                    internalList.add(recursionHash(f));
                 }
+                return FileHash.builder()
+                        .setFileName(file.getName())
+                        .setDirectory(true)
+                        .setHash(dirHash(file, internalList))
+                        .setInternalFiles(internalList)
+                        .build();
             } else {
-                fileHashList.add(fileHash(file));
+                return fileHash(file);
             }
         } catch (IOException e) {
             LOG.error(e);
         }
-        return fileHashList;
+        return null;
+    }
+
+    private static String dirHash(File file, List<FileHash> internalList) {
+        StringBuilder builder = new StringBuilder();
+        for (FileHash fh : internalList) {
+            builder.append(fh.getHash());
+        }
+        String hash = generator.getHash(builder.toString());
+        LOG.info("Dir {} hash is {}", file.getName(), hash);
+        return hash;
     }
 
     static FileHash fileHash(File file) throws IOException {
@@ -65,6 +73,7 @@ public class HashFiles {
 
         return FileHash.builder()
                 .setFileName(file.getName())
+                .setDirectory(false)
                 .setHash(hash)
                 .build();
     }

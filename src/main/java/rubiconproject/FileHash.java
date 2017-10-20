@@ -1,8 +1,13 @@
 package rubiconproject;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 public class FileHash {
     private String fileName;
     private String hash;
+    private boolean directory;
+    private List<FileHash> internalFiles;
 
     private FileHash() {
 
@@ -14,6 +19,26 @@ public class FileHash {
 
     public String getHash() {
         return hash;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+
+    public boolean isDirectory() {
+        return directory;
+    }
+
+    public List<FileHash> getInternalFiles() {
+        return internalFiles;
+    }
+
+    public void setInternalFiles(List<FileHash> internalFiles) {
+        this.internalFiles = internalFiles;
     }
 
     public static Builder builder() {
@@ -34,6 +59,16 @@ public class FileHash {
             return this;
         }
 
+        public Builder setDirectory(boolean directory) {
+            FileHash.this.directory = directory;
+            return this;
+        }
+
+        public Builder setInternalFiles(List<FileHash> internalFiles) {
+            FileHash.this.internalFiles = internalFiles;
+            return this;
+        }
+
         public FileHash build() {
             return FileHash.this;
         }
@@ -44,6 +79,8 @@ public class FileHash {
         return "FileHash{" +
                 "fileName='" + fileName + '\'' +
                 ", hash='" + hash + '\'' +
+                ", directory=" + directory +
+                ", internalFiles=" + internalFiles +
                 '}';
     }
 }
