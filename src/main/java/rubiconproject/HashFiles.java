@@ -39,24 +39,26 @@ public class HashFiles {
     }
 
     static String fileHash(File file) {
+        String content = readFile(file);
+        String hash = generator.getHash(content);
+        LOG.info("File {} hash is {}", file.getName(), hash);
+
+        return hash;
+    }
+
+    static String readFile(File file) {
         if (file.isDirectory()) {
             throw new IllegalArgumentException("Directories not supported here");
         }
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))){
-            StringBuilder builder = new StringBuilder();
-            reader.lines().forEach(builder::append);
+        try (BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file))){
+            byte[] contentArray = new byte[reader.available()];
+            reader.read(contentArray);
+            String contentString = new String(contentArray).replaceAll("\r", "");
             LOG.info("Read file {}", file.getName());
-            LOG.debug("File {} contains: {}", file.getName(), builder);
-            System.out.println(builder);
-            String hash = generator.getHash(builder.toString());
-            System.out.println(hash);
-            String hex = new String(Hex.decodeHex(hash.toCharArray()));
-            System.out.println(hex);
-            return hex;
+            LOG.debug("File {} contains: {}", file.getName(), contentString);
+            return contentString;
         } catch (IOException e) {
             LOG.error("Failed to read file {}", file.getName());
-        } catch (DecoderException e) {
-            e.printStackTrace();
         }
         throw new RuntimeException("Filed to read file " + file.getName());
     }
