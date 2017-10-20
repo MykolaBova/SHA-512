@@ -1,23 +1,21 @@
 package rubiconproject;
 
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.util.FileUtils;
 import rubiconproject.hash.HashGenerator;
 import rubiconproject.hash.Sha512HashGenerator;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Copyright © 2016 Rubicon Project, All rights reserved.
@@ -34,23 +32,50 @@ public class HashFiles {
             System.exit(1);
         }
         // Implement a program to calculate hash of the specified directory or file
-        Files.walk(Paths.get(argv[0]))
-                .forEach(System.out::println);
+        String path = argv[0];
+        LOG.info("Receive path {}", path);
+//        Files.walk(Paths.get(path))
+//                .forEach(System.out::println);
+        List<FileHash> list = new LinkedList<>();
+        List<FileHash> fileHashes = recursionHash(Paths.get(path).toFile(), list);
+        fileHashes.forEach(System.out::println);
     }
 
-    static String fileHash(File file) {
+    static List<FileHash> recursionHash(File file, List<FileHash> fileHashList)  {
+        try {
+            if (file.isDirectory()) {
+                fileHashList.add(FileHash.builder().setFileName(file.getName()).build());
+                File[] files = file.listFiles();
+                for (File f : files) {
+                    recursionHash(f, fileHashList);
+                }
+            } else {
+                fileHashList.add(fileHash(file));
+            }
+        } catch (IOException e) {
+            LOG.error(e);
+        }
+        return fileHashList;
+    }
+
+    static FileHash fileHash(File file) throws IOException {
         String content = readFile(file);
         String hash = generator.getHash(content);
         LOG.info("File {} hash is {}", file.getName(), hash);
 
-        return hash;
+        return FileHash.builder()
+                .setFileName(file.getName())
+                .setHash(hash)
+                .build();
     }
+
+
 
     static String readFile(File file) {
         if (file.isDirectory()) {
             throw new IllegalArgumentException("Directories not supported here");
         }
-        try (BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file))){
+        try (FileInputStream reader = new FileInputStream(file)) {
             byte[] contentArray = new byte[reader.available()];
             reader.read(contentArray);
             String contentString = new String(contentArray).replaceAll("\r", "");

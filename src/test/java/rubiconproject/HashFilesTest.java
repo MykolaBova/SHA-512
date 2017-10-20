@@ -17,17 +17,17 @@ public class HashFilesTest {
     @Test
     public void fileHash() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
-        String hash = HashFiles.fileHash(new File(classLoader.getResource("fileA.dat").getFile()));
-        assertEquals(FILE_A_HASH, hash);
+        FileHash hash = HashFiles.fileHash(new File(classLoader.getResource("fileA.dat").getFile()));
+        assertEquals(FILE_A_HASH, hash.getHash());
 
         hash = HashFiles.fileHash(new File(classLoader.getResource("fileB.dat").getFile()));
-        assertEquals(FILE_B_HASH, hash);
+        assertEquals(FILE_B_HASH, hash.getHash());
         hash = HashFiles.fileHash(new File(classLoader.getResource("fileC.dat").getFile()));
-        assertEquals(FILE_C_HASH, hash);
+        assertEquals(FILE_C_HASH, hash.getHash());
         hash = HashFiles.fileHash(new File(classLoader.getResource("fileD.dat").getFile()));
-        assertEquals(FILE_D_HASH, hash);
+        assertEquals(FILE_D_HASH, hash.getHash());
         hash = HashFiles.fileHash(new File(classLoader.getResource("fileE.dat").getFile()));
-        assertEquals(FILE_E_HASH, hash);
+        assertEquals(FILE_E_HASH, hash.getHash());
     }
 
 }
