@@ -2,11 +2,11 @@ package rubiconproject;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import rubiconproject.hash.FileHashUtil;
 import rubiconproject.hash.HashGenerator;
 import rubiconproject.hash.Sha512HashGenerator;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.LinkedList;
@@ -33,6 +33,11 @@ public class HashFiles {
         System.out.println(fileHashes);
     }
 
+    /**
+     *
+     * @param file
+     * @return
+     */
     static FileHash recursionHash(File file)  {
         try {
             if (file.isDirectory()) {
@@ -44,57 +49,15 @@ public class HashFiles {
                 return FileHash.builder()
                         .setFileName(file.getName())
                         .setDirectory(true)
-                        .setHash(dirHash(file, internalList))
+                        .setHash(FileHashUtil.dirHash(file, internalList))
                         .setInternalFiles(internalList)
                         .build();
             } else {
-                return fileHash(file);
+                return FileHashUtil.fileHash(file);
             }
-        } catch (IOException e) {
-            LOG.error(e);
-        }
-        return null;
-    }
-
-    private static String dirHash(File file, List<FileHash> internalList) {
-        StringBuilder builder = new StringBuilder();
-        for (FileHash fh : internalList) {
-            builder.append(fh.getHash());
-        }
-        String hash = generator.getHash(builder.toString());
-        LOG.info("Dir {} hash is {}", file.getName(), hash);
-        return hash;
-    }
-
-    static FileHash fileHash(File file) throws IOException {
-        String content = readFile(file);
-        String hash = generator.getHash(content);
-        LOG.info("File {} hash is {}", file.getName(), hash);
-
-        return FileHash.builder()
-                .setFileName(file.getName())
-                .setDirectory(false)
-                .setHash(hash)
-                .build();
-    }
-
-
-
-    static String readFile(File file) {
-        if (file.isDirectory()) {
-            throw new IllegalArgumentException("Directories not supported here");
-        }
-        try (FileInputStream reader = new FileInputStream(file)) {
-            byte[] contentArray = new byte[reader.available()];
-            reader.read(contentArray);
-            String contentString = new String(contentArray).replaceAll("\r", "");
-            LOG.info("Read file {}", file.getName());
-            LOG.debug("File {} contains: {}", file.getName(), contentString);
-            return contentString;
         } catch (IOException e) {
             LOG.error("Failed to read file {}", file.getName());
         }
         throw new RuntimeException("Filed to read file " + file.getName());
     }
-
 }
