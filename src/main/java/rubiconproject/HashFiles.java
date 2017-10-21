@@ -6,11 +6,10 @@ import rubiconproject.hash.FileHashUtil;
 import rubiconproject.hash.HashGenerator;
 import rubiconproject.hash.Sha512HashGenerator;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Copyright © 2016 Rubicon Project, All rights reserved.
@@ -29,30 +28,23 @@ public class HashFiles {
         // Implement a program to calculate hash of the specified directory or file
         String path = argv[0];
         LOG.info("Receive path {}", path);
-        FileHash fileHashes = recursionHash(Paths.get(path).toFile());
-        System.out.println(fileHashes);
+        FileWithHash result = FileHashUtil.recursionHash(Paths.get(path).toFile());
+        System.out.println("\n\n========================================== Result ==========================================\n");
+        printResult(result, "");
     }
 
-    /**
-     * Calculates hash recursively for each object if {@link File#isDirectory()}
-     *
-     * @param file {@link File} file or directory
-     * @return {@link FileHash} result
-     */
-    static FileHash recursionHash(File file)  {
-        if (file.isDirectory()) {
-            File[] files = file.listFiles();
-            List<FileHash> internalList = new LinkedList<>();
-            for (File f : files) {
-                internalList.add(recursionHash(f));
+    private static void printResult(FileWithHash fileWithHash, String pref) {
+
+        System.out.printf("%s %s \t\t\t %s\n",
+                pref,
+                fileWithHash.getFileName(),
+                fileWithHash.getHash());
+        List<FileWithHash> internalFiles = fileWithHash.getInternalFiles();
+        if (Objects.nonNull(internalFiles) && !internalFiles.isEmpty()) {
+            for (FileWithHash fwh : internalFiles) {
+                printResult(fwh, pref.concat("\t"));
             }
-            return FileHash.builder()
-                    .setFileName(file.getName())
-                    .setHash(FileHashUtil.dirHash(file, internalList))
-                    .setInternalFiles(internalList)
-                    .build();
-        } else {
-            return FileHashUtil.fileHash(file);
         }
     }
+
 }

@@ -6,9 +6,9 @@ import java.util.List;
  * Result of calculation hash.
  * Contains {@link String} fileName,
  *          {@link String} hash and
- *          {@link List} of {@link FileHash} internal objects for directories
+ *          {@link List} of {@link FileWithHash} internal objects for directories
  */
-public class FileHash {
+public class FileWithHash {
 
     // Name of file or directory
     private String fileName;
@@ -17,9 +17,9 @@ public class FileHash {
     private String hash;
 
     // List of internal objects (files or directories) if this is directory
-    private List<FileHash> internalFiles;
+    private List<FileWithHash> internalFiles;
 
-    private FileHash() {
+    private FileWithHash() {
 
     }
 
@@ -31,12 +31,12 @@ public class FileHash {
         return hash;
     }
 
-    public List<FileHash> getInternalFiles() {
+    public List<FileWithHash> getInternalFiles() {
         return internalFiles;
     }
 
     public static Builder builder() {
-        return new FileHash().new Builder();
+        return new FileWithHash().new Builder();
     }
 
     public class Builder {
@@ -44,28 +44,28 @@ public class FileHash {
         }
 
         public Builder setFileName(String fileName) {
-            FileHash.this.fileName = fileName;
+            FileWithHash.this.fileName = fileName;
             return this;
         }
 
         public Builder setHash(String hash) {
-            FileHash.this.hash = hash;
+            FileWithHash.this.hash = hash;
             return this;
         }
 
-        public Builder setInternalFiles(List<FileHash> internalFiles) {
-            FileHash.this.internalFiles = internalFiles;
+        public Builder setInternalFiles(List<FileWithHash> internalFiles) {
+            FileWithHash.this.internalFiles = internalFiles;
             return this;
         }
 
-        public FileHash build() {
-            return FileHash.this;
+        public FileWithHash build() {
+            return FileWithHash.this;
         }
     }
 
     @Override
     public String toString() {
-        return "FileHash{" +
+        return "FileWithHash{" +
                 "fileName='" + fileName + '\'' +
                 ", hash='" + hash + '\'' +
                 ", internalFiles=" + internalFiles +
