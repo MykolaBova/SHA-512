@@ -34,30 +34,25 @@ public class HashFiles {
     }
 
     /**
+     * Calculates hash recursively for each object if {@link File#isDirectory()}
      *
-     * @param file
-     * @return
+     * @param file {@link File} file or directory
+     * @return {@link FileHash} result
      */
     static FileHash recursionHash(File file)  {
-        try {
-            if (file.isDirectory()) {
-                File[] files = file.listFiles();
-                List<FileHash> internalList = new LinkedList<>();
-                for (File f : files) {
-                    internalList.add(recursionHash(f));
-                }
-                return FileHash.builder()
-                        .setFileName(file.getName())
-                        .setDirectory(true)
-                        .setHash(FileHashUtil.dirHash(file, internalList))
-                        .setInternalFiles(internalList)
-                        .build();
-            } else {
-                return FileHashUtil.fileHash(file);
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            List<FileHash> internalList = new LinkedList<>();
+            for (File f : files) {
+                internalList.add(recursionHash(f));
             }
-        } catch (IOException e) {
-            LOG.error("Failed to read file {}", file.getName());
+            return FileHash.builder()
+                    .setFileName(file.getName())
+                    .setHash(FileHashUtil.dirHash(file, internalList))
+                    .setInternalFiles(internalList)
+                    .build();
+        } else {
+            return FileHashUtil.fileHash(file);
         }
-        throw new RuntimeException("Filed to read file " + file.getName());
     }
 }

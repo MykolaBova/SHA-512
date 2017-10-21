@@ -3,10 +3,12 @@ package rubiconproject.hash;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Calculate hash using SHA-512 algorithm
+ */
 public class Sha512HashGenerator implements HashGenerator {
     private static final Logger LOG = LogManager.getLogger(Sha512HashGenerator.class);
     private static final String ALGORITHM = "SHA-512";

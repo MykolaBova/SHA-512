@@ -3,12 +3,20 @@ package rubiconproject;
 import java.util.List;
 
 /**
- *
+ * Result of calculation hash.
+ * Contains {@link String} fileName,
+ *          {@link String} hash and
+ *          {@link List} of {@link FileHash} internal objects for directories
  */
 public class FileHash {
+
+    // Name of file or directory
     private String fileName;
+
+    // Hash for file or directory
     private String hash;
-    private boolean directory;
+
+    // List of internal objects (files or directories) if this is directory
     private List<FileHash> internalFiles;
 
     private FileHash() {
@@ -21,10 +29,6 @@ public class FileHash {
 
     public String getHash() {
         return hash;
-    }
-
-    public boolean isDirectory() {
-        return directory;
     }
 
     public List<FileHash> getInternalFiles() {
@@ -49,11 +53,6 @@ public class FileHash {
             return this;
         }
 
-        public Builder setDirectory(boolean directory) {
-            FileHash.this.directory = directory;
-            return this;
-        }
-
         public Builder setInternalFiles(List<FileHash> internalFiles) {
             FileHash.this.internalFiles = internalFiles;
             return this;
@@ -69,7 +68,6 @@ public class FileHash {
         return "FileHash{" +
                 "fileName='" + fileName + '\'' +
                 ", hash='" + hash + '\'' +
-                ", directory=" + directory +
                 ", internalFiles=" + internalFiles +
                 '}';
     }
