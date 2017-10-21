@@ -1,0 +1,27 @@
+# SHA-512 hash calculator
+
+## Build the program
+
+Use maven to build the program:
+
+```
+mvn package
+```
+
+## Test the program
+
+Use maven to run unit tests:
+
+```
+mvn test
+```
+
+## Run the program
+
+Use java -jar to execute the program. Do not forget to add an argument: path to file (files):
+
+```
+java -jar SHA-512-1.0-SNAPSHOT.jar <path to files>
+java -jar SHA-512-1.0-SNAPSHOT.jar /home/
+```
+
