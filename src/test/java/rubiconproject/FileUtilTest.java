@@ -14,6 +14,16 @@ public class FileUtilTest extends AbstractTest {
         assertEquals(FILE_A_CONTENT, new String(bytes));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void readDirectory() {
+        FileUtil.readFile(new File(classLoader.getResource(DIR_INPUT).getFile()));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void readFileFail() {
+        FileUtil.readFile(new File("qwr"));
+    }
+
     @Test
     public void fixWindowsArray() {
         byte[] bytes = {14, 13, 10, 15};
