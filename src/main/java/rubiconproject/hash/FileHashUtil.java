@@ -27,7 +27,7 @@ public class FileHashUtil {
         for (FileHash fh : internalList) {
             builder.append(fh.getHash());
         }
-        String hash = GENERATOR.getHash(builder.toString());
+        String hash = GENERATOR.getHash(builder.toString().getBytes());
         LOG.info("Dir {} hash is {}", file.getName(), hash);
         return hash;
     }
@@ -39,7 +39,7 @@ public class FileHashUtil {
      * @throws IOException
      */
     public static FileHash fileHash(File file) throws IOException {
-        String content = FileUtil.readFile(file);
+        byte[] content = FileUtil.readFile(file);
         String hash = GENERATOR.getHash(content);
         LOG.info("File {} hash is {}", file.getName(), hash);
 
