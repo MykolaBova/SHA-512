@@ -53,6 +53,9 @@ public class FileUtil {
                 ++removed;
             }
         }
+        if (removed == 0) {
+            return contentArray;
+        }
         byte[] resultArray = new byte[contentArray.length - removed];
         int tmp = 0;
         for (int i = 0; i < resultArray.length + removed; i++) {
