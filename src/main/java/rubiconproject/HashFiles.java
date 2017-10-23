@@ -3,8 +3,6 @@ package rubiconproject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rubiconproject.hash.FileHashUtil;
-import rubiconproject.hash.HashGenerator;
-import rubiconproject.hash.Sha512HashGenerator;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -17,8 +15,6 @@ import java.util.Objects;
 public class HashFiles {
 
     private static final Logger LOG = LogManager.getLogger(HashFiles.class);
-
-    static HashGenerator generator = new Sha512HashGenerator();
 
     public static void main(String[] argv) throws IOException {
         if (argv.length < 1) {
