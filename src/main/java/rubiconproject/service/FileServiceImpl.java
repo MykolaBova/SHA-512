@@ -1,4 +1,4 @@
-package rubiconproject;
+package rubiconproject.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -7,21 +7,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-/**
- * Util class to read content of {@link File}
- */
-public class FileUtil {
-    private static final Logger LOG = LogManager.getLogger(FileUtil.class);
+public class FileServiceImpl implements FileService {
+    private static final Logger LOG = LogManager.getLogger(FileServiceImpl.class);
 
-    /**
-     * Read {@link File} content and return byte array.
-     * If {@link File#isDirectory()}, throw new {@link IllegalArgumentException}
-     * If {@link IOException} happens, throw new {@link RuntimeException}
-     *
-     * @param file file to read
-     * @return byte array or {@link IllegalArgumentException} or {@link RuntimeException}
-     */
-    public static byte[] readFile(File file) {
+    @Override
+    public byte[] readFile(File file) {
         if (file.isDirectory()) {
             throw new IllegalArgumentException("Directories not supported here");
         }
@@ -46,7 +36,7 @@ public class FileUtil {
      * @param contentArray byte array
      * @return new byte array without 13 byte
      */
-    static byte[] fixWindowsArray(byte[] contentArray) {
+    private byte[] fixWindowsArray(byte[] contentArray) {
         int removed = 0;
         for (Byte b : contentArray) {
             if (b == 13) {
