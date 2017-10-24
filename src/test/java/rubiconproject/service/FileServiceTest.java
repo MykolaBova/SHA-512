@@ -4,6 +4,7 @@ import org.junit.Test;
 import rubiconproject.AbstractTest;
 
 import java.io.File;
+import java.lang.reflect.Method;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,13 +26,15 @@ public class FileServiceTest extends AbstractTest {
         FILE_SERVICE.readFile(new File("qwr"));
     }
 
-    /*@Test
-    public void fixWindowsArray() {
+    @Test
+    public void fixWindowsArray() throws Exception {
+        Method method = FILE_SERVICE.getClass().getDeclaredMethod("removeWrongByte", byte[].class);
+        method.setAccessible(true);
         byte[] bytes = {14, 13, 10, 15};
-        byte[] fixed = FILE_SERVICE.fixWindowsArray(bytes);
+        byte[] fixed = (byte[]) method.invoke(FILE_SERVICE, bytes);
         assertEquals(3, fixed.length);
         assertEquals(14, fixed[0]);
         assertEquals(10, fixed[1]);
         assertEquals(15, fixed[2]);
-    }*/
+    }
 }

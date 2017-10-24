@@ -21,7 +21,7 @@ public class FileServiceImpl implements FileService {
 
             // Need to change new line '\r\n' to '\n'
             // Remove '\r' symbol (13)
-            byte[] result = fixWindowsArray(contentArray);
+            byte[] result = removeWrongByte(contentArray);
             LOG.info("Read from file {} {} bytes", file.getName(), result.length);
             return result;
         } catch (IOException e) {
@@ -31,12 +31,12 @@ public class FileServiceImpl implements FileService {
     }
 
     /**
-     * Fix byte array for windows system. This method remove byte 13 from array
+     * Fix byte array: remove /r symbol (byte 13) from array
      *
      * @param contentArray byte array
      * @return new byte array without 13 byte
      */
-    private byte[] fixWindowsArray(byte[] contentArray) {
+    private byte[] removeWrongByte(byte[] contentArray) {
         int removed = 0;
         for (Byte b : contentArray) {
             if (b == 13) {
