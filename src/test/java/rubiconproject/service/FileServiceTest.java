@@ -27,7 +27,7 @@ public class FileServiceTest extends AbstractTest {
     }
 
     @Test
-    public void fixWindowsArray() throws Exception {
+    public void removeWrongByte() throws Exception {
         Method method = FILE_SERVICE.getClass().getDeclaredMethod("removeWrongByte", byte[].class);
         method.setAccessible(true);
         byte[] bytes = {14, 13, 10, 15};
