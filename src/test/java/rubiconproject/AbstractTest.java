@@ -3,9 +3,9 @@ package rubiconproject;
 import rubiconproject.hash.HashGenerator;
 import rubiconproject.hash.Sha512HashGenerator;
 import rubiconproject.service.FileHashService;
-import rubiconproject.service.FileHashServiceImpl;
+import rubiconproject.service.impl.FileHashServiceImpl;
 import rubiconproject.service.FileService;
-import rubiconproject.service.FileServiceImpl;
+import rubiconproject.service.impl.FileServiceImpl;
 
 public class AbstractTest {
     protected static final String FILE_A_HASH = "af371785c4fecf30acdd648a7d4d649901eeb67536206a9f517768f0851c0a06616f724b2a194e7bc0a762636c55fc34e0fcaf32f1e852682b2b07a9d7b7a9f9";
@@ -26,8 +26,8 @@ public class AbstractTest {
     protected static final String DIR_INPUT_HASH = "6dd415b8f89a52dd3ce277946150f1df6ea98a89296d0574db69b1fbc4d0aade51abba041529309abfbf07897808edb31a4a6b73a9b7c79fce20476062f6288a";
 
     protected static final HashGenerator GENERATOR = new Sha512HashGenerator();
-    protected static final FileHashService FILE_HASH_SERVICE = new FileHashServiceImpl();
     protected static final FileService FILE_SERVICE = new FileServiceImpl();
+    protected static final FileHashService FILE_HASH_SERVICE = new FileHashServiceImpl(GENERATOR, FILE_SERVICE);
 
     protected  ClassLoader classLoader = getClass().getClassLoader();
 }

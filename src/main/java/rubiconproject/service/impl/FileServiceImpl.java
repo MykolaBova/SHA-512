@@ -1,7 +1,8 @@
-package rubiconproject.service;
+package rubiconproject.service.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import rubiconproject.service.FileService;
 
 import java.io.File;
 import java.io.FileInputStream;
