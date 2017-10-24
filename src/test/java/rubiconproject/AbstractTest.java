@@ -3,8 +3,8 @@ package rubiconproject;
 import rubiconproject.hash.HashGenerator;
 import rubiconproject.hash.impl.Sha512HashGenerator;
 import rubiconproject.service.FileHashService;
-import rubiconproject.service.impl.FileHashServiceImpl;
 import rubiconproject.service.FileService;
+import rubiconproject.service.impl.FileHashServiceImpl;
 import rubiconproject.service.impl.FileServiceImpl;
 
 public class AbstractTest {
@@ -29,5 +29,5 @@ public class AbstractTest {
     protected static final FileService FILE_SERVICE = new FileServiceImpl();
     protected static final FileHashService FILE_HASH_SERVICE = new FileHashServiceImpl(GENERATOR, FILE_SERVICE);
 
-    protected  ClassLoader classLoader = getClass().getClassLoader();
+    protected ClassLoader classLoader = getClass().getClassLoader();
 }

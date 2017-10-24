@@ -4,7 +4,8 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import rubiconproject.AbstractTest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class Sha512HashGeneratorTest extends AbstractTest {
 

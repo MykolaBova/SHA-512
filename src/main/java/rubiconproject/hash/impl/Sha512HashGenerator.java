@@ -21,12 +21,11 @@ public class Sha512HashGenerator implements HashGenerator {
             MessageDigest md = MessageDigest.getInstance(ALGORITHM);
             byte[] bytes = md.digest(byteArray);
             StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++){
+            for (int i = 0; i < bytes.length; i++) {
                 sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
             }
             hashedString = sb.toString();
-        }
-        catch (NoSuchAlgorithmException e){
+        } catch (NoSuchAlgorithmException e) {
             LOG.error("Hash algorithm error: {}", e.getMessage());
         }
         return hashedString;

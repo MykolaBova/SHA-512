@@ -20,7 +20,7 @@ public class FileServiceImpl implements FileService {
             throw new IllegalArgumentException("Directories not supported here");
         }
 
-        try (InputStream inputStream = new BufferedInputStream(new FileInputStream(file))){
+        try (InputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
             byte[] content = new byte[inputStream.available()];
             inputStream.read(content);
             return content;

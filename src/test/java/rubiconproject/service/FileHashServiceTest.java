@@ -13,7 +13,10 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -30,6 +33,7 @@ public class FileHashServiceTest extends AbstractTest {
         when(fileWithHash1.getHash()).thenReturn("123");
         when(fileWithHash2.getHash()).thenReturn("456");
     }
+
     @Test
     public void dirHash() throws Exception {
         String hash = FILE_HASH_SERVICE.dirHash(new File(classLoader.getResource(DIR_INPUT).getFile()), Arrays.asList(fileWithHash1, fileWithHash2));

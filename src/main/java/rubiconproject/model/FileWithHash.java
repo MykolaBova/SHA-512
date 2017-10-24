@@ -5,8 +5,8 @@ import java.util.List;
 /**
  * Result of calculation hash.
  * Contains {@link String} fileName,
- *          {@link String} hash and
- *          {@link List} of {@link FileWithHash} internal objects for directories
+ * {@link String} hash and
+ * {@link List} of {@link FileWithHash} internal objects for directories
  */
 public class FileWithHash {
 
@@ -23,6 +23,10 @@ public class FileWithHash {
 
     }
 
+    public static Builder builder() {
+        return new FileWithHash().new Builder();
+    }
+
     public String getFileName() {
         return fileName;
     }
@@ -35,8 +39,13 @@ public class FileWithHash {
         return internalFiles;
     }
 
-    public static Builder builder() {
-        return new FileWithHash().new Builder();
+    @Override
+    public String toString() {
+        return "FileWithHash{" +
+                "fileName='" + fileName + '\'' +
+                ", hash='" + hash + '\'' +
+                ", internalFiles=" + internalFiles +
+                '}';
     }
 
     public class Builder {
@@ -61,14 +70,5 @@ public class FileWithHash {
         public FileWithHash build() {
             return FileWithHash.this;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "FileWithHash{" +
-                "fileName='" + fileName + '\'' +
-                ", hash='" + hash + '\'' +
-                ", internalFiles=" + internalFiles +
-                '}';
     }
 }
