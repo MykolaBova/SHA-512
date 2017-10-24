@@ -1,6 +1,6 @@
 package rubiconproject.service;
 
-import rubiconproject.FileWithHash;
+import rubiconproject.model.FileWithHash;
 import rubiconproject.hash.HashGenerator;
 
 import java.io.File;

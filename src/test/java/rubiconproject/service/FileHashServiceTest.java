@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import rubiconproject.AbstractTest;
-import rubiconproject.FileWithHash;
+import rubiconproject.model.FileWithHash;
 
 import java.io.File;
 import java.util.Arrays;

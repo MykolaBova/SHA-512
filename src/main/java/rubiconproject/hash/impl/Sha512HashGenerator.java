@@ -1,7 +1,8 @@
-package rubiconproject.hash;
+package rubiconproject.hash.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import rubiconproject.hash.HashGenerator;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

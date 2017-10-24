@@ -1,7 +1,7 @@
 package rubiconproject;
 
 import rubiconproject.hash.HashGenerator;
-import rubiconproject.hash.Sha512HashGenerator;
+import rubiconproject.hash.impl.Sha512HashGenerator;
 import rubiconproject.service.FileHashService;
 import rubiconproject.service.impl.FileHashServiceImpl;
 import rubiconproject.service.FileService;

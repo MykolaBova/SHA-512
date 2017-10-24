@@ -2,7 +2,8 @@ package rubiconproject;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import rubiconproject.hash.Sha512HashGenerator;
+import rubiconproject.hash.impl.Sha512HashGenerator;
+import rubiconproject.model.FileWithHash;
 import rubiconproject.service.impl.FileHashServiceImpl;
 import rubiconproject.service.impl.FileServiceImpl;
 

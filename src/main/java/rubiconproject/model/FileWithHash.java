@@ -1,4 +1,4 @@
-package rubiconproject;
+package rubiconproject.model;
 
 import java.util.List;
 
