@@ -40,9 +40,7 @@ public class HashFiles {
                 fileWithHash.getHash());
         List<FileWithHash> internalFiles = fileWithHash.getInternalFiles();
         if (Objects.nonNull(internalFiles) && !internalFiles.isEmpty()) {
-            for (FileWithHash fwh : internalFiles) {
-                printResult(fwh, pref.concat("\t"));
-            }
+            fileWithHash.getInternalFiles().forEach(h -> printResult(h, "\t"));
         }
     }
 
