@@ -19,8 +19,8 @@ public class FileServiceImpl implements FileService {
             byte[] contentArray = new byte[reader.available()];
             reader.read(contentArray);
 
-            // In windows new line is '\r\n', but we need unix-like'\n'
-            // So, in windows systems we need to remove '\r' symbol (13)
+            // Need to change new line '\r\n' to '\n'
+            // Remove '\r' symbol (13)
             byte[] result = fixWindowsArray(contentArray);
             LOG.info("Read from file {} {} bytes", file.getName(), result.length);
             return result;

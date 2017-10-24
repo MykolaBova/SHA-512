@@ -7,6 +7,7 @@ import rubiconproject.hash.HashGenerator;
 import rubiconproject.hash.Sha512HashGenerator;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class FileHashServiceImpl implements FileHashService {
     public FileWithHash recursionHash(File file) {
         if (file.isDirectory()) {
             File[] files = file.listFiles();
+            Arrays.sort(files);
             List<FileWithHash> internalList = new LinkedList<>();
             for (File f : files) {
                 internalList.add(recursionHash(f));
